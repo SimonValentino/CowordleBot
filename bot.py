@@ -20,6 +20,14 @@ def check_game_over():
         return False
     return True
 
+def click(driver, by, element):
+    WebDriverWait(driver, 100).until(
+        EC.element_to_be_clickable((by, element))).click()
+
+def send_keys(driver, by, element, keys):
+    WebDriverWait(driver, 100).until(
+        EC.element_to_be_clickable((by, element))).send_keys(keys)
+
 key_to_index = {'q': 0, 'w': 1, 'e': 2, 'r': 3, 't': 4, 'y': 5, 'u': 6, 'i': 7, 'o': 8, 'p': 9, 'a': 10, 's': 11, 'd': 12, 'f': 13,
                 'g': 14, 'h': 15, 'j': 16, 'k': 17, 'l': 18, 'del': 19, 'z': 20, 'x': 21, 'c': 22, 'v': 23, 'b': 24, 'n': 25, 'm': 26, 'enter': 27}
 
@@ -31,12 +39,9 @@ options.add_experimental_option("detach", True)
 game = webdriver.Chrome(options=options)
 game.get("https://cowordle.org/mode-2")
 
-WebDriverWait(game, 100).until(
-    EC.element_to_be_clickable((By.CLASS_NAME, "difficulty_hard_btn" if IS_HARD_MODE else "difficulty_normal_btn"))).click()
-WebDriverWait(game, 100).until(
-    EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[5]/div[2]/div/div[1]/div[3]/div/input"))).send_keys(USERNAME)
-WebDriverWait(game, 100).until(
-    EC.element_to_be_clickable((By.CLASS_NAME, "start_btn"))).click()
+click(game, By.CLASS_NAME, "difficulty_hard_btn" if IS_HARD_MODE else "difficulty_normal_btn")
+send_keys(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[5]/div[2]/div/div[1]/div[3]/div/input", USERNAME)
+click(game, By.CLASS_NAME, "start_btn")
 
 
 
@@ -44,8 +49,7 @@ bot = webdriver.Chrome(options=options)
 bot.get("https://www.simn.me/eldrow/")
 
 if IS_HARD_MODE:
-    WebDriverWait(bot, 100).until(
-        EC.element_to_be_clickable((By.ID, "easy"))).click()
+    click(bot, By.ID, "easy")
     
 WebDriverWait(game, 100).until(
     EC.presence_of_element_located((By.CLASS_NAME, "timer")))
