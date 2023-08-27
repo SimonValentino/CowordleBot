@@ -100,7 +100,7 @@ while True:
     ).get_attribute("class") == "Row Row-locked-in":
         continue
     
-    time.sleep(0.07)
+    time.sleep(0.1)
 
     hints = [game.find_element(
         By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[{j}]") for j in range(1, NUM_LETTERS + 1)]
