@@ -57,7 +57,7 @@ send_keys(game, By.XPATH,
 click(game, By.CLASS_NAME, "start_btn")
 
 
-options.add_argument("--headless")
+# options.add_argument("--headless")
 bot = webdriver.Chrome(options=options)
 bot.get("https://www.simn.me/eldrow/")
 
@@ -100,7 +100,7 @@ while True:
     ).get_attribute("class") == "Row Row-locked-in":
         continue
     
-    time.sleep(0.1)
+    time.sleep(0.15)
 
     hints = [game.find_element(
         By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[{j}]") for j in range(1, NUM_LETTERS + 1)]

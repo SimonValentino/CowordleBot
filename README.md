@@ -7,4 +7,4 @@ The bot goes until it looses. You can customize the username and weather or not 
 Cowordle website: https://cowordle.org/
 Bot (Eldrow) website: https://www.simn.me/eldrow/
 
-Some issues. There are words that are some words that are guessable in wordle, such as LEGGO, that are not guessable on Cowordle for whatever reason. The only way to solve this would be to use a bot that only guesses words that are in the answer list rather than the guessable list.
+Some issues. There are words that are some words that are guessable in Wordle, such as LEGGO, that are not guessable on Cowordle for whatever reason. A more common problem is is the S is green and the E and R are yellow in SERIA (the bots favorite starting word), it then guesses SHERO, which Cowordle does not accept. The only way to solve this would be to use a bot that only guesses words that are in the answer list rather than the guessable list. I don't know why Cowordle does not accept some words that are acceptable on the official NY Times Wordle.
