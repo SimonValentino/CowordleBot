@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 import time
 
-IS_HARD_MODE = False
+IS_HARD_MODE = True
 NUM_LETTERS = 5
 USERNAME = "Simon101"
 COWORDLE_YELLOW_CLASS = "Row-letter Row-letter-double letter-elsewhere"
