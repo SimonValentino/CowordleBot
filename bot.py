@@ -57,7 +57,7 @@ send_keys(game, By.XPATH,
 click(game, By.CLASS_NAME, "start_btn")
 
 
-#options.add_argument("--headless")
+options.add_argument("--headless")
 bot = webdriver.Chrome(options=options)
 bot.get("https://www.simn.me/eldrow/")
 
