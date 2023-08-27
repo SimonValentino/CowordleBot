@@ -7,7 +7,7 @@ import time
 
 IS_HARD_MODE = True
 NUM_LETTERS = 5
-USERNAME = "gorillagamer"
+USERNAME = "Vintage"
 COWORDLE_YELLOW_CLASS = "Row-letter Row-letter-double letter-elsewhere"
 COWORDLE_GREEN_CLASS = "Row-letter Row-letter-double letter-correct"
 BOT_YELLOW_CLASS = "tile active score-present"
@@ -72,7 +72,7 @@ keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
 i = 1
 
 while True:
-    if game_over() or i > 6:
+    if game_over():
         time.sleep(0.5)
         click(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[3]")
         click(bot, By.XPATH, "/html/body/div/div/div[2]/button[2]")
@@ -81,11 +81,15 @@ while True:
 
         i = 1
     
+    if i > 6:
+        continue
+    
+    time.sleep(0.3)
     letters = bot.find_element(
         By.XPATH, f"/html/body/div/div/section[1]/section[{i}]")
     word = letters.text.replace("\n", "")
     enter_word(word)
-    time.sleep(0.2)
+    time.sleep(0.25)
 
     hints = [game.find_element(
         By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[{j}]") for j in range(1, NUM_LETTERS + 1)]
@@ -109,6 +113,5 @@ while True:
 
 
     click(bot, By.XPATH, "/html/body/div/div/div[2]/button[1]")
-    time.sleep(0.3)
 
     i += 1
