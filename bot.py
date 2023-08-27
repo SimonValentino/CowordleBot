@@ -6,7 +6,12 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 
 IS_HARD_MODE = True
+NUM_LETTERS = 5
 USERNAME = "gorillagamer"
+COWORDLE_YELLOW_CLASS = "Row-letter Row-letter-double letter-elsewhere"
+COWORDLE_GREEN_CLASS = "Row-letter Row-letter-double letter-correct"
+BOT_YELLOW_CLASS = "tile active score-present"
+BOT_GREEN_CLASS = "tile active score-correct"
 
 
 def enter_word(word):
@@ -15,7 +20,7 @@ def enter_word(word):
     keys[key_to_index["ENTER"]].click()
 
 
-def check_game_over():
+def game_over():
     try:
         game.find_element(By.CLASS_NAME, "restart_btn")
     except NoSuchElementException:
@@ -64,13 +69,42 @@ WebDriverWait(game, 100).until(
 keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
 
 i = 1
-while not check_game_over():
-    letters = bot.find_elements(
-        By.XPATH, f"/html/body/div/div/section[1]/section[{i}]")[0]
+
+while True:
+    if game_over():
+        click(game, By.CLASS_NAME, "restart_btn")
+        click(bot, By.XPATH, "/html/body/div/div/div[2]/button[2]")
+        WebDriverWait(game, 100).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "timer")))
+        i = 1
+    
+    letters = bot.find_element(
+        By.XPATH, f"/html/body/div/div/section[1]/section[{i}]")
     word = letters.text.replace("\n", "")
     enter_word(word)
     time.sleep(0.2)
-    
-    
-    
+
+    hints = [game.find_element(
+        By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[{j}]") for j in range(1, NUM_LETTERS + 1)]
+    bot_buttons = [bot.find_element(
+        By.XPATH, f"/html/body/div/div/section[1]/section[{i}]/button[{j}]") for j in range(1, NUM_LETTERS + 1)]
+
+    for j in range(0, len(hints)):
+        hint_class = hints[j].get_attribute("class")
+        bot_button = bot_buttons[j]
+        bot_button_class = bot_button.get_attribute("class")
+        
+        if hint_class == COWORDLE_YELLOW_CLASS and not bot_button_class == BOT_YELLOW_CLASS:
+            bot_button.click()
+        elif hint_class == COWORDLE_GREEN_CLASS:
+            if bot_button.get_attribute("class") == BOT_YELLOW_CLASS:
+                bot_button.click()
+            elif not bot_button.get_attribute("class") == BOT_GREEN_CLASS:
+                bot_button.click()
+                bot_button.click()
+
+
+    click(bot, By.XPATH, "/html/body/div/div/div[2]/button[1]")
+    time.sleep(0.2)
+
     i += 1
