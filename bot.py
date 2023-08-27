@@ -72,7 +72,7 @@ keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
 i = 1
 
 while True:
-    if game_over():
+    if game_over() or i > 6:
         time.sleep(0.5)
         click(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[3]")
         click(bot, By.XPATH, "/html/body/div/div/div[2]/button[2]")
@@ -104,6 +104,7 @@ while True:
                 bot_button.click()
             elif not bot_button.get_attribute("class") == BOT_GREEN_CLASS:
                 bot_button.click()
+                time.sleep(0.05)
                 bot_button.click()
 
 
