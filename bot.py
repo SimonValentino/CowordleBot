@@ -22,10 +22,10 @@ def enter_word(word):
 
 def game_over():
     try:
-        game.find_element(By.CLASS_NAME, "restart_btn")
+        game.find_element(By.CLASS_NAME, "timer")
     except NoSuchElementException:
-        return False
-    return True
+        return True
+    return False
 
 
 def click(driver, by, element):
@@ -57,6 +57,7 @@ send_keys(game, By.XPATH,
 click(game, By.CLASS_NAME, "start_btn")
 
 
+options.add_argument("--headless")
 bot = webdriver.Chrome(options=options)
 bot.get("https://www.simn.me/eldrow/")
 
@@ -72,10 +73,12 @@ i = 1
 
 while True:
     if game_over():
-        click(game, By.CLASS_NAME, "restart_btn")
+        time.sleep(0.5)
+        click(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[3]")
         click(bot, By.XPATH, "/html/body/div/div/div[2]/button[2]")
         WebDriverWait(game, 100).until(
             EC.presence_of_element_located((By.CLASS_NAME, "timer")))
+
         i = 1
     
     letters = bot.find_element(
@@ -89,7 +92,7 @@ while True:
     bot_buttons = [bot.find_element(
         By.XPATH, f"/html/body/div/div/section[1]/section[{i}]/button[{j}]") for j in range(1, NUM_LETTERS + 1)]
 
-    for j in range(0, len(hints)):
+    for j in range(0, NUM_LETTERS):
         hint_class = hints[j].get_attribute("class")
         bot_button = bot_buttons[j]
         bot_button_class = bot_button.get_attribute("class")
@@ -105,6 +108,6 @@ while True:
 
 
     click(bot, By.XPATH, "/html/body/div/div/div[2]/button[1]")
-    time.sleep(0.2)
+    time.sleep(0.3)
 
     i += 1
