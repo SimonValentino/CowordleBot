@@ -84,6 +84,10 @@ while True:
     if i > 6:
         continue
     
+    while "." in bot.find_element(
+        By.XPATH, f"/html/body/div/div/section[1]/section[{i}]").text:
+        continue
+    
     letters = bot.find_element(
         By.XPATH, f"/html/body/div/div/section[1]/section[{i}]")
     word = letters.text.replace("\n", "")
@@ -119,5 +123,3 @@ while True:
     click(bot, By.XPATH, "/html/body/div/div/div[2]/button[1]")
 
     i += 1
-    
-    time.sleep(0.5)
