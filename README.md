@@ -6,3 +6,5 @@ The bot goes until it looses. You can customize the username and weather or not 
 
 Cowordle website: https://cowordle.org/
 Bot (Eldrow) website: https://www.simn.me/eldrow/
+
+Some issues. There are words that are some words that are guessable in wordle, such as LEGGO, that are not guessable on Cowordle for whatever reason. The only way to solve this would be to use a bot that only guesses words that are in the answer list rather than the guessable list.
