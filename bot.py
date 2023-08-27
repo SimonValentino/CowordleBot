@@ -74,6 +74,8 @@ i = 1
 while True:
     if game_over():
         time.sleep(0.5)
+        if i > 6:
+            click(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[4]")
         click(game, By.CLASS_NAME, "restart_btn")
         click(bot, By.XPATH, "/html/body/div/div/div[2]/button[2]")
         WebDriverWait(game, 100).until(
@@ -98,7 +100,7 @@ while True:
     ).get_attribute("class") == "Row Row-locked-in":
         continue
     
-    time.sleep(0.05)
+    time.sleep(0.07)
 
     hints = [game.find_element(
         By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[{j}]") for j in range(1, NUM_LETTERS + 1)]
