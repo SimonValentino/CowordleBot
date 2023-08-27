@@ -57,7 +57,7 @@ send_keys(game, By.XPATH,
 click(game, By.CLASS_NAME, "start_btn")
 
 
-options.add_argument("--headless")
+#options.add_argument("--headless")
 bot = webdriver.Chrome(options=options)
 bot.get("https://www.simn.me/eldrow/")
 
@@ -74,7 +74,7 @@ i = 1
 while True:
     if game_over():
         time.sleep(0.5)
-        click(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[3]")
+        click(game, By.CLASS_NAME, "restart_btn")
         click(bot, By.XPATH, "/html/body/div/div/div[2]/button[2]")
         WebDriverWait(game, 100).until(
             EC.presence_of_element_located((By.CLASS_NAME, "timer")))
@@ -84,12 +84,17 @@ while True:
     if i > 6:
         continue
     
-    time.sleep(0.3)
     letters = bot.find_element(
         By.XPATH, f"/html/body/div/div/section[1]/section[{i}]")
     word = letters.text.replace("\n", "")
     enter_word(word)
-    time.sleep(0.25)
+    
+    while not game.find_element(
+        By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]"
+    ).get_attribute("class") == "Row Row-locked-in":
+        continue
+    
+    time.sleep(0.02)
 
     hints = [game.find_element(
         By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[{j}]") for j in range(1, NUM_LETTERS + 1)]
@@ -108,10 +113,11 @@ while True:
                 bot_button.click()
             elif not bot_button.get_attribute("class") == BOT_GREEN_CLASS:
                 bot_button.click()
-                time.sleep(0.05)
                 bot_button.click()
 
 
     click(bot, By.XPATH, "/html/body/div/div/div[2]/button[1]")
 
     i += 1
+    
+    time.sleep(0.5)
