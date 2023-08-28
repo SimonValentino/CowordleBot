@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 import time
 
-IS_HARD_MODE = True
+IS_HARD_MODE = False
 NUM_LETTERS = 5
 USERNAME = "Simon101"
 COWORDLE_YELLOW_CLASS = "Row-letter Row-letter-double letter-elsewhere"
@@ -29,12 +29,12 @@ def game_over():
 
 
 def click(driver, by, element):
-    WebDriverWait(driver, 100).until(
+    WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((by, element))).click()
 
 
 def send_keys(driver, by, element, keys):
-    WebDriverWait(driver, 100).until(
+    WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((by, element))).send_keys(keys)
 
 
@@ -64,7 +64,7 @@ bot.get("https://www.simn.me/eldrow/")
 if IS_HARD_MODE:
     click(bot, By.ID, "easy")
 
-WebDriverWait(game, 100).until(
+WebDriverWait(game, 20).until(
     EC.presence_of_element_located((By.CLASS_NAME, "timer")))
 
 keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
@@ -74,9 +74,7 @@ i = 1
 while True:
     if game_over():
         time.sleep(0.5)
-        if i > 6:
-            click(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[4]")
-        click(game, By.CLASS_NAME, "restart_btn")
+        click(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[3]/button")
         click(bot, By.XPATH, "/html/body/div/div/div[2]/button[2]")
         WebDriverWait(game, 100).until(
             EC.presence_of_element_located((By.CLASS_NAME, "timer")))
