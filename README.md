@@ -4,6 +4,12 @@ Wordle bot and Cowordle automation by Simon Valentino.
 
 This project has a wordle bot in the wordle_bot.py file as well as a webdriver in the cowordle_driver.py file that uses the bot to automate Cowordle games because I was lazy and winning was way to hard. It's much more enjoyable to watch my opponents struggle while I sit back and win without lifting a finger.
 
+# How to use it
+
+You can change the bots words and starting word with the words and starting_word keyword args. These default to the wordle answer list and "trace" (the bots favorite starting word). You can find the guess list and answers list from their respective variable names in the word_reservoir.py module. Beware that using the guess list is a bit buggy. I honestly think it's faster using only the answer list anyway. You can change your cowordle username in both drivers. In the Eldrow driver changing IS_HARD_MODE will actually change what the bot guesses, which does not change my custom bot driver. My bot will always play hard mode.
+
+Just run either the driver that uses my custom wordle bot or the driver that scraped the eldrow website and enjoy some free wins.
+
 # The Wordle Bot
 
 When coding this bot I realized how many ways there are to go about making a wordle bot. I will explain my approach, but remember, this is by no stretch of imagination the only one.
@@ -23,4 +29,9 @@ The bot essentially checks every word with every other word and finds which one 
 Originally, this project would just automate Cowordle games and get the answers from the website Eldrow (a very smart wordle bot). This code is still preserved in the cowordle_eldrow_bot.py file. While this was cool, and definitely very fun to mess around with, it had some problems. The bot would guess words like "ormer" or "globi" which are not in the answer list, which results in debatably worse performance. Additionally, it would rarely guess a word that would not even be accepted by Cowordle, which completely broke the game. This approach was also messy as two webdrivers had to be managed at once.
 
 I was having enough fun with this project and thought it would be really cool to design my own wordle bot, so I did.
+
+# What May Be to Come
+* Hard mode for my custom wordle bot
+* Minor bug fixes when using the entire guess list in my custom bot
+* Changing what happens when you loose
 
