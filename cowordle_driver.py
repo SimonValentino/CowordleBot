@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 import time
 from wordle_bot import Bot
+from word_reservoir import answer_list, guess_list
 
 IS_HARD_MODE = True
 NUM_LETTERS = 5
@@ -67,37 +68,39 @@ WebDriverWait(game, 20).until(
 
 keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
 
-bot = Bot()
+bot = Bot(words=answer_list, starting_word="trace")
 
 i = 1
 
 while True:
     if game_over():
         time.sleep(0.5)
-        click(game, By.XPATH, "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[3]/button")
+        click(game, By.XPATH,
+              "/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[7]/div[2]/div/div[3]/button")
         bot.reset()
         WebDriverWait(game, 100).until(
             EC.presence_of_element_located((By.CLASS_NAME, "timer")))
 
         i = 1
-    
+
     if i > 6:
         continue
-    
+
     word = bot.calculate_guess()
     enter_word(word)
-    
+
     while not game.find_element(
         By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]"
     ).get_attribute("class") == "Row Row-locked-in":
         continue
-    
-    time.sleep(0.15)
+
+    time.sleep(0.2)
 
     hints = [game.find_element(
         By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[{j}]") for j in range(1, NUM_LETTERS + 1)]
-        
-    hints_for_bot = [hint_to_num[hints[j].get_attribute("class")] for j in range (0, NUM_LETTERS)]
+
+    hints_for_bot = [hint_to_num[hints[j].get_attribute(
+        "class")] for j in range(0, NUM_LETTERS)]
     bot.absorb_hints(hints_for_bot)
 
     i += 1
