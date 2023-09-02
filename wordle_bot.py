@@ -4,7 +4,6 @@ from statistics import mean
 
 class Bot:
     def __init__(self, *, words=answer_list, starting_word=""):
-        self.__words = words
         self.__narrowed_list = words
         self.__starting_word = starting_word
         self.__eval_to_words = {}
@@ -15,9 +14,9 @@ class Bot:
             words_to_consider = [self.__starting_word]
             self.__has_used_starting_word = True
         else:
-            words_to_consider = self.__words
+            words_to_consider = self.__narrowed_list
 
-        avg_remaining_wordcount = 1e3
+        avg_remaining_wordcount = 100
 
         for word in words_to_consider:
             temp_eval_to_words = {}
@@ -42,7 +41,6 @@ class Bot:
 
     def absorb_hints(self, hints):
         self.__narrowed_list = self.__eval_to_words[tuple(hints)]
-        self.__words = self.__narrowed_list
 
     def evaluate_word(self, guess, possible_answer):
         hints = [0, 0, 0, 0, 0]
