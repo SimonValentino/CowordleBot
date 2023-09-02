@@ -41,26 +41,31 @@ class Bot:
         return guess
 
     def absorb_hints(self, hints):
+        print(hints)
         self.__narrowed_list = self.__eval_to_words[tuple(hints)]
         self.__guessable_words = self.__narrowed_list
 
     def evaluate_word(self, guess, possible_answer):
-        result = []
-        unmatched_answer = list(possible_answer)
-
-        for i in range(len(guess)):
+        hints = [0, 0, 0, 0, 0]
+        
+        # Check for greens (2)
+        for i in range(5):
             if guess[i] == possible_answer[i]:
-                result.append(2)
-                unmatched_answer[i] = None
-            elif guess[i] in unmatched_answer:
-                result.append(1)
-                unmatched_answer[unmatched_answer.index(guess[i])] = None
-            else:
-                result.append(0)
-
-        return tuple(result)
+                hints[i] = 2
+                possible_answer = possible_answer[:i] + ' ' + possible_answer[i + 1:]
+            
+        # Check for yellows (1)
+        for i in range(5):
+            char = guess[i]
+            if char in possible_answer and hints[i] == 0:
+                hints[i] = 1
+                first_occurence = possible_answer.find(char)
+                possible_answer = possible_answer[:first_occurence] + ' ' + possible_answer[first_occurence + 1:]
+                
+        return tuple(hints)
 
     def reset(self):
+        self.__guessable_words = answer_list
         self.__narrowed_list = answer_list
         self.__eval_to_words = {}
         self.__has_used_starting_word = False

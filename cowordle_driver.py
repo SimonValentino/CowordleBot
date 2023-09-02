@@ -17,6 +17,7 @@ COWORDLE_GREEN_CLASS = "Row-letter Row-letter-double letter-correct"
 def enter_word(word):
     for letter in word:
         keys[key_to_index[letter]].click()
+        time.sleep(0.01)
     keys[key_to_index["enter"]].click()
 
 
