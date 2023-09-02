@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 from wordle_bot import Bot
 
-IS_HARD_MODE = False
+IS_HARD_MODE = True
 NUM_LETTERS = 5
 USERNAME = "Simon101"
 COWORDLE_GREY_CLASS = "Row-letter Row-letter-double letter-absent"
@@ -66,7 +66,7 @@ WebDriverWait(game, 20).until(
 
 keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
 
-bot = Bot(starting_word="trace")
+bot = Bot()
 
 i = 1
 
