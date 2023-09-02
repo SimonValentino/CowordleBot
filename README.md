@@ -2,7 +2,7 @@ Wordle bot and Cowordle automation by Simon Valentino.
 
 # What It Does
 
-This project has a wordle bot in the wordle_bot.py file as well as a webdriver in the cowordle_driver.py file that uses the bot to automate Cowordle games because I was lazy and winning was way to hard. It's much more enjoyable to watch my opponents struggle while I sit back and win without lifting a finger.
+This project has a wordle bot in the wordle_bot.py file as well as a webdriver in the cowordle_driver.py file that uses the bot to automate Cowordle games because I was lazy and winning was way to hard. It's much more enjoyable to watch my opponents struggle while I sit back and win without lifting a finger. The bot goes until it draws or looses.
 
 # How to use it
 
