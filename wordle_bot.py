@@ -41,7 +41,6 @@ class Bot:
         return guess
 
     def absorb_hints(self, hints):
-        print(hints)
         self.__narrowed_list = self.__eval_to_words[tuple(hints)]
         self.__words = self.__narrowed_list
 
