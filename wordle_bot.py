@@ -59,9 +59,9 @@ class Bot:
             char = guess[i]
             if char in possible_answer and hints[i] == 0:
                 hints[i] = 1
-                first_occurence = possible_answer.find(char)
-                possible_answer = possible_answer[:first_occurence] + \
-                    ' ' + possible_answer[first_occurence + 1:]
+                first_occurrence = possible_answer.find(char)
+                possible_answer = possible_answer[:first_occurrence] + \
+                    ' ' + possible_answer[first_occurrence + 1:]
 
         return tuple(hints)
 
