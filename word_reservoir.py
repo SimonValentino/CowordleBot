@@ -11,7 +11,7 @@ def __get_answer_list():
 
 def __get_guess_list():
     words = []
-    with open("guess_list.py", "r") as file:
+    with open("guess_list.txt", "r") as file:
         for line in file:
             words.append(line.strip())
     return np.array(words)
