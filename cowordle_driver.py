@@ -68,7 +68,7 @@ WebDriverWait(game, 20).until(
 
 keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
 
-bot = Bot(words=guess_list, starting_word="salet")
+bot = Bot(words=answer_list, starting_word="salet")
 
 i = 1
 
@@ -90,11 +90,9 @@ while True:
     enter_word(word)
 
     while not game.find_element(
-        By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]"
-    ).get_attribute("class") == "Row Row-locked-in":
+        By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[5]"
+    ).get_attribute("class") in (COWORDLE_GREY_CLASS, COWORDLE_YELLOW_CLASS, COWORDLE_GREEN_CLASS):
         continue
-
-    time.sleep(0.2)
 
     hints = [game.find_element(
         By.XPATH, f"/html/body/div[1]/div/section/div/div[1]/div/div/div/div/div[2]/div[1]/div/div[1]/div/div[1]/div[{i}]/div[{j}]") for j in range(1, NUM_LETTERS + 1)]
