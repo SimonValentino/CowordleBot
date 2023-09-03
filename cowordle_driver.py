@@ -68,7 +68,7 @@ WebDriverWait(game, 20).until(
 
 keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
 
-bot = Bot(words=answer_list, starting_word="trace")
+bot = Bot(words=guess_list, starting_word="salet")
 
 i = 1
 

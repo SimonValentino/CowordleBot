@@ -7,7 +7,7 @@ class Bot:
         self.__narrowed_list = words
         self.__starting_word = starting_word
         self.__eval_to_words = {}
-        self.__has_used_starting_word = not bool(starting_word)
+        self.__has_used_starting_word = not starting_word
 
     def calculate_guess(self):
         if not self.__has_used_starting_word:
@@ -16,7 +16,7 @@ class Bot:
         else:
             words_to_consider = self.__narrowed_list
 
-        avg_remaining_wordcount = 100
+        avg_remaining_wordcount = 10000
 
         for word in words_to_consider:
             temp_eval_to_words = {}

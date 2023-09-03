@@ -14,15 +14,49 @@ Just run either the driver that uses my custom wordle bot or the driver that scr
 
 When coding this bot I realized how many ways there are to go about making a wordle bot. I will explain my approach, but remember, this is by no stretch of imagination the only one.
 
-### Which Words It Can Guess
+## Which Words It Can Guess
 
 My wordle bot defaults to only guessing and calculating based off answer list words. The answer list and guess list (including answers too) are in answer_list.txt and guess_list.txt files respectively. You can change the words for the bot at will, and I highly encourage it. The bot will only make guesses from these words, and it will treat all of them as possible answers. It is a keyword arg in the Bot class's constructor that defaults to wordle's answer list. Try changing this to the guess list and see what happens. You can get the answer and guess list in python list form from the word_reservoir.py file.
 
 As you may or may not know, but the wordle ANSWER list (2,315 words) and the wordle GUESS list (12,972 words) are two different things. So, when making the bot, I had to decide both which words it would guess, and which words it would use to calculate the guesses. I originally wanted it to be able to guess all words but only calculate with the answer list words, but it was hard to make sure it wouldn't only guess guess list words and not enough answer list words. You may get a lot of information, but the odds of guessing the correct word on a guess becomes lower when you use a guess list word. Finding this balance is one of the really important keys to a great wordle bot, so hats off to anyone that can figure that out.
 
-### The Bot's Algorithm
+## The Bot's Algorithm
 
 The bot essentially checks every word with every other word and finds which one will end up with the smallest average number of guesses needed after is makes that word guess. It can also be made so that it selects which ever word has the best worst case scenario: the smallest most number of guesses that could be needed. Because it goes through all the words on the first loop, I HIGHLY recommend passing a starting word in the keyword args parameter. It will be slow at first if you do not. To save you some time, the best starting word according to the bot from the answer list is "trace" and the best starting word from the guess list is "tares". 
+
+## BEST STARTING WORDS
+
+Each word is paired with the average number of guesses it took to win when compared with every possible answer list word. I tested the most common "best" starting words.
+
+Minimizing average number of guesses needed at each step algorithm (the one I ended up keeping):
+
+    salet:  4.53304535637149
+
+    trace:  4.546868250539957
+
+    crane:  4.563282937365011
+
+    stare:  4.567170626349892
+
+    arise:  4.608639308855292
+
+    serai:  4.634557235421166
+
+Minimizing worst case scenario after each guess algorithm:
+
+    salet:  4.587041036717062
+
+    trace:  4.592224622030238
+
+    stare:  4.629805615550756
+
+    crane:  4.6427645788336935
+
+    arise:  4.678617710583153
+
+    serai:  4.707127429805616
+
+You can see that of the two algorithms I tested, the first one was clearly stronger. Looks like "salet" is the best starting word. It's not in the answer list but the letters provide enough benefit. Trace does have the advantage of possibly being the answer, but it's very unlikely.
 
 # Where this project started
 
