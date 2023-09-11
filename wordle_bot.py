@@ -3,16 +3,17 @@ from statistics import mean
 
 
 class Bot:
-    def __init__(self, *, words=answer_list, starting_word=""):
+    def __init__(self, *, words=answer_list, starting_words=""):
+        self.__words = words
         self.__narrowed_list = words
-        self.__starting_word = starting_word
+        self.__starting_words = starting_words
         self.__eval_to_words = {}
-        self.__has_used_starting_word = not starting_word
+        self.__starting_words_index = 0
 
     def calculate_guess(self):
-        if not self.__has_used_starting_word:
-            words_to_consider = [self.__starting_word]
-            self.__has_used_starting_word = True
+        if not len(self.__narrowed_list) == 1 and self.__starting_words_index < len(self.__starting_words):
+            words_to_consider = [self.__starting_words[self.__starting_words_index]]
+            self.__starting_words_index += 1
         else:
             words_to_consider = self.__narrowed_list
 
@@ -39,9 +40,6 @@ class Bot:
 
         return guess
 
-    def absorb_hints(self, hints):
-        self.__narrowed_list = self.__eval_to_words[tuple(hints)]
-
     def evaluate_word(self, guess, possible_answer):
         hints = [0, 0, 0, 0, 0]
 
@@ -62,9 +60,11 @@ class Bot:
                     ' ' + possible_answer[first_occurrence + 1:]
 
         return tuple(hints)
+    
+    def absorb_hints(self, hints):
+        self.__narrowed_list = self.__eval_to_words[tuple(hints)]
 
     def reset(self):
-        self.__words = answer_list
-        self.__narrowed_list = answer_list
+        self.__narrowed_list = self.__words
         self.__eval_to_words = {}
-        self.__has_used_starting_word = False
+        self.__starting_words_index = 0

@@ -4,68 +4,46 @@ Wordle bot and Cowordle automation by Simon Valentino.
 
 This project has a wordle bot in the wordle_bot.py file as well as a webdriver in the cowordle_driver.py file that uses the bot to automate Cowordle games because I was lazy and winning was way to hard. It's much more enjoyable to watch my opponents struggle while I sit back and win without lifting a finger. The bot goes until it draws or looses.
 
-# How to use it
+# How to Use the Wordle Bot
 
-You can change the bots words and starting word with the words and starting_word keyword args. These default to the wordle answer list and "trace" (the bots favorite starting word). You can find the guess list and answers list from their respective variable names in the word_reservoir.py module. Beware that using the guess list is a bit buggy. I honestly think it's faster using only the answer list anyway. You can change your cowordle username in both drivers. In the Eldrow driver changing IS_HARD_MODE will actually change what the bot guesses, which does not change my custom bot driver. My bot will always play hard mode.
+## Initializing the Bot
 
-Just run either the driver that uses my custom wordle bot or the driver that scraped the eldrow website and enjoy some free wins.
+To create a Wordle bot object you must import the Bot class from wordle_bot.py. The Bot class has two optional parameters in its constructor, the word list it will use, and a list of starting words. If no word list is given it will make guesses from Wordle's official answer list. Also know that the Cowordle answer list and Wordle answer list are slightly different, with the Cowordle answer list having words like "april", so be sure to use that list for Cowordle. This list is still evolving, I just add to it when the bot can't guess the Cowordle word. All the lists can be found in their respective txt files and allocated in list form from the word_reservoir.py module. If no starting words are given it will calculate it's own starting word based on the word list that was given. I recommend leaving the word list parameter to its default because that will make the bot guess the word fastest. I also recommend giving the Wordle bot a starting word because if you do not than it will take a couple seconds to calculate the starting word itself, and those seconds can be crucial for the Cowordle webdriver. You should only pass multiple starting words if you are not playing on hard mode because the second word might not be valid after the hints of the first word. See "Starting Words Analysis" section for info on what words to start with.
 
-# The Wordle Bot
+## The Bot's Functions
 
-When coding this bot I realized how many ways there are to go about making a wordle bot. I will explain my approach, but remember, this is by no stretch of imagination the only one.
+The calculate_guess functions will return a str that is the guess the Wordle bot is making based off all the previously absorbed hints. This guess will be a starting word if the guess number is less than the length of the starting words guess list.
 
-## Which Words It Can Guess
+After a guess is made the bot's evaluate_word function will take in the guess and an answer and return at tuple of ints from 0 to 2, 2 meaning green, 1 meaning yellow, and 0 meaning grey. The order of these ints will correspond to the order of the letters in the guess.
 
-My wordle bot defaults to only guessing and calculating based off answer list words. The answer list and guess list (including answers too) are in answer_list.txt and guess_list.txt files respectively. You can change the words for the bot at will, and I highly encourage it. The bot will only make guesses from these words, and it will treat all of them as possible answers. It is a keyword arg in the Bot class's constructor that defaults to wordle's answer list. Try changing this to the guess list and see what happens. You can get the answer and guess list in python list form from the word_reservoir.py file.
+The bot's absorb_hints function can be thought of as the bot learning from hints which are tuples of length 5 as explained before. This function doe not return anything, it just gets the bot ready for the next calculate_guess call.
 
-As you may or may not know, but the wordle ANSWER list (2,315 words) and the wordle GUESS list (12,972 words) are two different things. So, when making the bot, I had to decide both which words it would guess, and which words it would use to calculate the guesses. I originally wanted it to be able to guess all words but only calculate with the answer list words, but it was hard to make sure it wouldn't only guess guess list words and not enough answer list words. You may get a lot of information, but the odds of guessing the correct word on a guess becomes lower when you use a guess list word. Finding this balance is one of the really important keys to a great wordle bot, so hats off to anyone that can figure that out.
+The reset function resets all the learning that the bot had done, putting it in the same state as when it was first initialized. The words it knows and the starting words list stay the same.
 
-## The Bot's Algorithm
+# Cowordle automation
 
-The bot essentially checks every word with every other word and finds which one will end up with the smallest average number of guesses needed after is makes that word guess. It can also be made so that it selects which ever word has the best worst case scenario: the smallest most number of guesses that could be needed. Because it goes through all the words on the first loop, I HIGHLY recommend passing a starting word in the keyword args parameter. It will be slow at first if you do not. To save you some time, the best starting word according to the bot from the answer list is "trace" and the best starting word from the guess list is "tares". 
+The bot has to use the Cowordle answer list because it is slightly different from the Wordle one. Using the normal answer list will cause errors.
 
-## BEST STARTING WORDS
+## Cowordle Driver
 
-Each word is paired with the average number of guesses it took to win when compared with every possible answer list word. I tested the most common "best" starting words.
+The cowordle_driver.py module uses the bot and automates the popular website Cowordle where you race against someone to see who can solve the Wordle the fastest. You can customize the username and weather it is hard mode or not. My bot does not have a normal or hard mode distinction, but if you give it multiple starting words than you can force it to start out on normal mode. Just make sure if you do that you set IS_HARD_MODE to false.
 
-Minimizing average number of guesses needed at each step algorithm (the one I ended up keeping):
+## Cowordle Eldrow Driver
 
-    salet:  4.53304535637149
+This webdriver does not involve any of my own Wordle bot, it solely gets words to guess from the website Eldrow, another Wordle bot online. This bot does have a hard mode and normal mode distinction. 
 
-    trace:  4.546868250539957
+## Which is better?
 
-    crane:  4.563282937365011
+Overall, I think my Wordle bot is faster because the Eldrow bot guesses words that are not in the answer list but still in the guess list. I haven't formally tested which is technically best but from experience it seems to me that mine is better. Also, using my bot allows words to be entered into Cowordle faster because extra time does have to be wasted waiting for the word to come up onto the Eldrow website. In terms of winning on Cowordle, mine definitely wins faster. Try out both and see for yourself.
 
-    stare:  4.567170626349892
+# Starting Words Analysis
 
-    arise:  4.608639308855292
+All the starting word data was done by my bot using the official Wordle answer list as possible answers and guesses (besides the first guess) and the entire guess lists as possible first guesses.
 
-    serai:  4.634557235421166
+## On Starting Word
 
-Minimizing worst case scenario after each guess algorithm:
+After 8 days of 100% CPU usage and the power of multithreading I was able to test every single guessable word with all of the answer list words, take the average number of guesses each starting word needed to win, and put the data into a csv file called starting_word_data.csv. Feel free to check how your favorite starting word sizes up with the others. The best starting word for my bot is "salet".
 
-    salet:  4.587041036717062
+## Multiple Starting Words
 
-    trace:  4.592224622030238
-
-    stare:  4.629805615550756
-
-    crane:  4.6427645788336935
-
-    arise:  4.678617710583153
-
-    serai:  4.707127429805616
-
-You can see that of the two algorithms I tested, the first one was clearly stronger. Looks like "salet" is the best starting word. It's not in the answer list but the letters provide enough benefit. Trace does have the advantage of possibly being the answer, but it's very unlikely.
-
-# Where this project started
-
-Originally, this project would just automate Cowordle games and get the answers from the website Eldrow (a very smart wordle bot). This code is still preserved in the cowordle_eldrow_bot.py file. While this was cool, and definitely very fun to mess around with, it had some problems. The bot would guess words like "ormer" or "globi" which are not in the answer list, which results in debatably worse performance. Additionally, it would rarely guess a word that would not even be accepted by Cowordle, which completely broke the game. This approach was also messy as two webdrivers had to be managed at once.
-
-I was having enough fun with this project and thought it would be really cool to design my own wordle bot, so I did.
-
-# What May Be to Come
-* Hard mode for my custom wordle bot
-* Minor bug fixes when using the entire guess list in my custom bot
-* Changing what happens when you loose
-
+For using multiple starting words on normal mode I know doing the "stare" "cloud" "pinky" strategy is very common, but the bot actually likes "salet" "round" "chick" "pygmy" the best.

@@ -5,11 +5,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 import time
 from wordle_bot import Bot
-from word_reservoir import answer_list, guess_list
+from word_reservoir import cowordle_answer_list
 
+# Customizable variables
 IS_HARD_MODE = True
-NUM_LETTERS = 5
 USERNAME = "Simon101"
+bot = Bot(words=cowordle_answer_list,
+          starting_words=["salet"])
+
+NUM_LETTERS = 5
 COWORDLE_GREY_CLASS = "Row-letter Row-letter-double letter-absent"
 COWORDLE_YELLOW_CLASS = "Row-letter Row-letter-double letter-elsewhere"
 COWORDLE_GREEN_CLASS = "Row-letter Row-letter-double letter-correct"
@@ -17,8 +21,9 @@ COWORDLE_GREEN_CLASS = "Row-letter Row-letter-double letter-correct"
 
 def enter_word(word):
     for letter in word:
+        time.sleep(0.015)
         keys[key_to_index[letter]].click()
-        time.sleep(0.01)
+    time.sleep()
     keys[key_to_index["enter"]].click()
 
 
@@ -67,8 +72,6 @@ WebDriverWait(game, 20).until(
     EC.presence_of_element_located((By.CLASS_NAME, "timer")))
 
 keys = game.find_elements(By.CLASS_NAME, "Game-keyboard-button")
-
-bot = Bot(words=answer_list, starting_word="salet")
 
 i = 1
 
