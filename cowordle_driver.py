@@ -23,7 +23,7 @@ def enter_word(word):
     for letter in word:
         time.sleep(0.015)
         keys[key_to_index[letter]].click()
-    time.sleep()
+    time.sleep(0.015)
     keys[key_to_index["enter"]].click()
 
 
