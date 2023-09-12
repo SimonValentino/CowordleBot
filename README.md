@@ -8,7 +8,7 @@ This project has a wordle bot in the wordle_bot.py file as well as a webdriver i
 
 ## Initializing the Bot
 
-To create a Wordle bot object you must import the Bot class from wordle_bot.py. The Bot class has two optional parameters in its constructor, the word list it will use, and a list of starting words. If no word list is given it will make guesses from Wordle's official answer list. Also know that the Cowordle answer list and Wordle answer list are slightly different, with the Cowordle answer list having words like "april", so be sure to use that list for Cowordle. This list is still evolving, I just add to it when the bot can't guess the Cowordle word. All the lists can be found in their respective txt files and allocated in list form from the word_reservoir.py module. If no starting words are given it will calculate it's own starting word based on the word list that was given. I recommend leaving the word list parameter to its default because that will make the bot guess the word fastest. I also recommend giving the Wordle bot a starting word because if you do not than it will take a couple seconds to calculate the starting word itself, and those seconds can be crucial for the Cowordle webdriver. You should only pass multiple starting words if you are not playing on hard mode because the second word might not be valid after the hints of the first word. See "Starting Words Analysis" section for info on what words to start with.
+To create a Wordle bot object you must import the Bot class from wordle_bot.py. The Bot class has two optional parameters in its constructor, the word list it will use, and a list of starting words. If no word list is given it will make guesses from Wordle's official answer list. Also know that the Cowordle answer list and Wordle answer list are slightly different, with the Cowordle answer list having words like "april", so be sure to use that list for Cowordle. This list is still evolving, I just add to it when the bot can't guess the Cowordle word. All the lists can be found in their respective txt files and allocated in list form from the word_reservoir.py module. If no starting words are given it will calculate it's own starting word based on the word list that was given. I recommend leaving the word list parameter to its default because that will make the bot guess the word fastest. I also recommend giving the Wordle bot a starting word because if you do not than it will take a couple seconds to calculate the starting word itself, and those seconds can be crucial for the Cowordle webdriver. You should only pass multiple starting words if you are not playing on hard mode because the second word might not be valid after the hints of the first word. See "Starting Words Analysis" section for info on what words to start with. You can change the hard_mode keyword arg to False if you don't want the bot on hard mode.
 
 ## The Bot's Functions
 
@@ -20,13 +20,17 @@ The bot's absorb_hints function can be thought of as the bot learning from hints
 
 The reset function resets all the learning that the bot had done, putting it in the same state as when it was first initialized. The words it knows and the starting words list stay the same.
 
+## Optimal setup
+
+For both speed AND least number of average guesses, words set to the answer list and hard_mode set to True is the best setup.
+
 # Cowordle automation
 
 The bot has to use the Cowordle answer list because it is slightly different from the Wordle one. Using the normal answer list will cause errors.
 
 ## Cowordle Driver
 
-The cowordle_driver.py module uses the bot and automates the popular website Cowordle where you race against someone to see who can solve the Wordle the fastest. You can customize the username and weather it is hard mode or not. My bot does not have a normal or hard mode distinction, but if you give it multiple starting words than you can force it to start out on normal mode. Just make sure if you do that you set IS_HARD_MODE to false.
+The cowordle_driver.py module uses the bot and automates the popular website Cowordle where you race against someone to see who can solve the Wordle the fastest. You can customize the username and weather it is hard mode or not. If you give it multiple starting words than you can force it to start out on normal mode. Just make sure if you do that you set IS_HARD_MODE to false because the other starting words might not be valid on hard mode.
 
 ## Cowordle Eldrow Driver
 
@@ -34,7 +38,7 @@ This webdriver does not involve any of my own Wordle bot, it solely gets words t
 
 ## Which is better?
 
-Overall, I think my Wordle bot is faster because the Eldrow bot guesses words that are not in the answer list but still in the guess list. I haven't formally tested which is technically best but from experience it seems to me that mine is better. Also, using my bot allows words to be entered into Cowordle faster because extra time does have to be wasted waiting for the word to come up onto the Eldrow website. In terms of winning on Cowordle, mine definitely wins faster. Try out both and see for yourself.
+Overall, I think my Wordle bot is faster because the Eldrow bot guesses words that are not in the answer list but still in the guess list. Also, using my bot allows words to be entered into Cowordle faster because extra time does have to be wasted waiting for the word to come up onto the Eldrow website. Try out both and see for yourself.
 
 # Starting Words Analysis
 
