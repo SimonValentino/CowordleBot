@@ -3,19 +3,22 @@ from statistics import mean
 
 
 class Bot:
-    def __init__(self, *, words=answer_list, starting_words=""):
+    def __init__(self, *, words=answer_list, starting_words="", hard_mode=True):
         self.__words = words
         self.__narrowed_list = words
         self.__starting_words = starting_words
+        self.__hard_mode = hard_mode
         self.__eval_to_words = {}
         self.__starting_words_index = 0
 
     def calculate_guess(self):
-        if not len(self.__narrowed_list) == 1 and self.__starting_words_index < len(self.__starting_words):
+        if self.__starting_words_index < len(self.__starting_words):
             words_to_consider = [self.__starting_words[self.__starting_words_index]]
             self.__starting_words_index += 1
-        else:
+        elif len(self.__narrowed_list) == 1 or self.__hard_mode:
             words_to_consider = self.__narrowed_list
+        else:
+            words_to_consider = self.__words
 
         avg_remaining_wordcount = 10000
 
