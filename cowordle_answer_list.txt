@@ -1115,6 +1115,7 @@ lance
 lanky
 lapel
 lapse
+larch
 large
 larva
 lasso
