@@ -11,7 +11,8 @@ from word_reservoir import cowordle_answer_list
 IS_HARD_MODE = True
 USERNAME = "Simon101"
 bot = Bot(words=cowordle_answer_list,
-          starting_words=["salet"])
+          starting_words=["salet"],
+          hard_mode=IS_HARD_MODE)
 
 NUM_LETTERS = 5
 COWORDLE_GREY_CLASS = "Row-letter Row-letter-double letter-absent"
