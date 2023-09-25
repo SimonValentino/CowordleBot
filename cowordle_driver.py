@@ -9,12 +9,12 @@ from word_reservoir import cowordle_answer_list
 
 # Customizable variables
 IS_HARD_MODE = True
-USERNAME = "marlin"
+USERNAME = "Simon101"
 bot = Bot(words=cowordle_answer_list,
-          starting_words=["stare"],
+          starting_words=["salet"],
           hard_mode=IS_HARD_MODE)
 
-NUM_LETTERS = 5
+NUM_LETTERS = 5 
 COWORDLE_GREY_CLASS = "Row-letter Row-letter-double letter-absent"
 COWORDLE_YELLOW_CLASS = "Row-letter Row-letter-double letter-elsewhere"
 COWORDLE_GREEN_CLASS = "Row-letter Row-letter-double letter-correct"

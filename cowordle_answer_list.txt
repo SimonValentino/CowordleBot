@@ -644,6 +644,7 @@ eaten
 eater
 ebony
 eclat
+edger
 edict
 edify
 eerie
