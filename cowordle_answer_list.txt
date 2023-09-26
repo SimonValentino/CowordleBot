@@ -85,6 +85,7 @@ angle
 angry
 angst
 anime
+anise
 ankle
 annex
 annoy
@@ -642,6 +643,7 @@ earth
 easel
 eaten
 eater
+eaves
 ebony
 eclat
 edger
@@ -708,6 +710,7 @@ extol
 extra
 exult
 eying
+eyrie
 fable
 facet
 faint
@@ -1768,6 +1771,7 @@ shirt
 shoal
 shoat
 shock
+shoes
 shone
 shook
 shoot
